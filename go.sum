@@ -20,8 +20,8 @@ github.com/mattn/go-isatty v0.0.24 h1:tGZZoVgT/KiqK1c8ocVLeDS8BSWMRd47J3Lbz7vsRe
 github.com/mattn/go-isatty v0.0.24/go.mod h1:nMCL3Zebbrt45jsMDgnfIwz6ydEQApk5oEI3HqDio6A=
 github.com/ncruces/go-strftime v1.0.0 h1:HMFp8mLCTPp341M/ZnA4qaf7ZlsbTc+miZjCLOFAw7w=
 github.com/ncruces/go-strftime v1.0.0/go.mod h1:Fwc5htZGVVkseilnfgOVb9mKy6w1naJmn9CehxcKcls=
-github.com/openpak/xb-account v0.1.34 h1:WmOc7TMRENKgnB1+WTSiI6MPboXk3SsbTLoGhSvFqq8=
-github.com/openpak/xb-account v0.1.34/go.mod h1:/WhlZauEY082K/Jlsr1JJOAFOkhv819uXoJeVbuv82g=
+github.com/openpak/xb-account v0.1.35 h1:mrCRxS0yYlwEEd3l/3cVYjPDOz/xyR9H7BFSMoPrPow=
+github.com/openpak/xb-account v0.1.35/go.mod h1:/WhlZauEY082K/Jlsr1JJOAFOkhv819uXoJeVbuv82g=
 github.com/openpak/xb-auth v0.1.34 h1:K0BqnOtPFJSnqNCiDTAW/UWijJZBT2DCfkO1sIVXqCw=
 github.com/openpak/xb-auth v0.1.34/go.mod h1:q2H45KTpjlvYgW4Xwp8r6bdDhQ9TgM972oN1r2Z+Vf8=
 github.com/openpak/xb-common v0.1.0 h1:XAc03kQTqekRaXPnW7hvIpj41YFBxNimzKIue6V/hQM=

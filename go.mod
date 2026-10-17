@@ -3,7 +3,7 @@ module github.com/openpak/xb-e2e
 go 1.26.0
 
 require (
-	github.com/openpak/xb-account v0.1.34
+	github.com/openpak/xb-account v0.1.35
 	github.com/openpak/xb-auth v0.1.34
 	github.com/openpak/xb-common v0.1.0
 	github.com/openpak/xb-enroll v0.1.34
