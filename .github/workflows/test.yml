@@ -1,0 +1,34 @@
+name: e2e
+
+# Runs only on pushed release tags (and manually), like every OpenPak repository.
+on:
+  push:
+    tags: ['v*.*.*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: [self-hosted, linux, podman]
+    steps:
+      - uses: actions/checkout@v5
+      - name: Scratch in the runner's temp, not the machine's shared /tmp
+        run: |
+          mkdir -p "$RUNNER_TEMP/scratch"
+          echo "TMPDIR=$RUNNER_TEMP/scratch" >> "$GITHUB_ENV"
+      - name: Build, vet and test in a Go container
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          umask 077
+          printf 'machine github.com login x-access-token password %s\n' "$GITHUB_TOKEN" > "$RUNNER_TEMP/netrc"
+          podman run --rm -v "$PWD:/src:Z" -v "$RUNNER_TEMP/netrc:/root/.netrc:ro,Z" -w /src \
+            -e GOWORK=off -e GOFLAGS=-buildvcs=false -e 'GOPRIVATE=github.com/openpak/*' \
+            docker.io/library/golang:1.26-bookworm sh -ec '
+              go vet ./...
+              go test -race -count=1 ./...'
+      - name: Clear scratch
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/scratch" "$RUNNER_TEMP/netrc"

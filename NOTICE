@@ -1,0 +1,5 @@
+OpenPak xb-e2e. Licensed under AGPL-3.0-only (LICENSE).
+Split from https://github.com/openpak/xbox-live (test/e2e, commit
+7fc575dd21485791ed80149deba4f158e66044ae), a fork of
+https://github.com/XombieOnline/xombie (AGPL-3.0). The tests use published Xombie
+packet vectors only through the packages they exercise; see those repositories' NOTICE files.

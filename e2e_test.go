@@ -33,13 +33,13 @@ import (
 	"testing"
 	"time"
 
-	"openpak/xb-live/internal/krb"
-	"openpak/xb-live/internal/sgwire"
-	"openpak/xb-live/internal/xbaccountapi"
-	"openpak/xb-live/internal/xbcrypto"
-	account "openpak/xb-live/services/xb-account/testkit"
-	auth "openpak/xb-live/services/xb-auth/testkit"
-	gw "openpak/xb-live/services/xb-gateway/testkit"
+	account "github.com/openpak/xb-account/testkit"
+	auth "github.com/openpak/xb-auth/testkit"
+	"github.com/openpak/xb-common/krb"
+	"github.com/openpak/xb-common/xbaccountapi"
+	"github.com/openpak/xb-common/xbcrypto"
+	"github.com/openpak/xb-gateway/sgwire"
+	gw "github.com/openpak/xb-gateway/testkit"
 )
 
 const (

@@ -20,10 +20,10 @@ import (
 	"testing"
 	"time"
 
-	"openpak/xb-live/internal/krb"
-	"openpak/xb-live/internal/xbcrypto"
-	account "openpak/xb-live/services/xb-account/testkit"
-	enroll "openpak/xb-live/services/xb-enroll/testkit"
+	account "github.com/openpak/xb-account/testkit"
+	"github.com/openpak/xb-common/krb"
+	"github.com/openpak/xb-common/xbcrypto"
+	enroll "github.com/openpak/xb-enroll/testkit"
 )
 
 // enrolWorld adds the public xb-enroll front (serving real HTTP) to a world.
