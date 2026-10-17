@@ -20,10 +20,11 @@ jobs:
           echo "TMPDIR=$RUNNER_TEMP/scratch" >> "$GITHUB_ENV"
       - name: Build, vet and test in a Go container
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MODULE_TOKEN: ${{ secrets.OPENPAK_MODULE_TOKEN }}
         run: |
           umask 077
-          printf 'machine github.com login x-access-token password %s\n' "$GITHUB_TOKEN" > "$RUNNER_TEMP/netrc"
+          TOKEN="${MODULE_TOKEN:-$(gh auth token)}"  # repo secret, else the runner host's gh login
+          printf 'machine github.com login x-access-token password %s\n' "$TOKEN" > "$RUNNER_TEMP/netrc"
           podman run --rm -v "$PWD:/src:Z" -v "$RUNNER_TEMP/netrc:/root/.netrc:ro,Z" -w /src \
             -e GOWORK=off -e GOFLAGS=-buildvcs=false -e 'GOPRIVATE=github.com/openpak/*' \
             docker.io/library/golang:1.26-bookworm sh -ec '
