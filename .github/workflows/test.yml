@@ -23,7 +23,8 @@ jobs:
           MODULE_TOKEN: ${{ secrets.OPENPAK_MODULE_TOKEN }}
         run: |
           umask 077
-          TOKEN="${MODULE_TOKEN:-$(gh auth token)}"  # repo secret, else the runner host's gh login
+          if [ -z "${MODULE_TOKEN:-}" ]; then echo "::error::OPENPAK_MODULE_TOKEN is not set on this repo" >&2; exit 1; fi
+          TOKEN="$MODULE_TOKEN"  # empty is refused above, never filled from the host
           printf 'machine github.com login x-access-token password %s\n' "$TOKEN" > "$RUNNER_TEMP/netrc"
           podman run --rm -v "$PWD:/src:Z" -v "$RUNNER_TEMP/netrc:/root/.netrc:ro,Z" -w /src \
             -e GOWORK=off -e GOFLAGS=-buildvcs=false -e 'GOPRIVATE=github.com/openpak/*' \
