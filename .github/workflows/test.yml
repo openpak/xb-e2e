@@ -11,26 +11,24 @@ permissions:
 
 jobs:
   test:
-    runs-on: [self-hosted, linux, podman]
+    runs-on: ubuntu-24.04
+    env:
+      GOWORK: 'off'
+      GOFLAGS: -buildvcs=false
+      GOPRIVATE: github.com/openpak/*
     steps:
       - uses: actions/checkout@v5
-      - name: Scratch in the runner's temp, not the machine's shared /tmp
-        run: |
-          mkdir -p "$RUNNER_TEMP/scratch"
-          echo "TMPDIR=$RUNNER_TEMP/scratch" >> "$GITHUB_ENV"
-      - name: Build, vet and test in a Go container
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.x'
+      - name: Module token
         env:
           MODULE_TOKEN: ${{ secrets.OPENPAK_MODULE_TOKEN }}
         run: |
           umask 077
-          if [ -z "${MODULE_TOKEN:-}" ]; then echo "::error::OPENPAK_MODULE_TOKEN is not set on this repo" >&2; exit 1; fi
-          TOKEN="$MODULE_TOKEN"  # empty is refused above, never filled from the host
-          printf 'machine github.com login x-access-token password %s\n' "$TOKEN" > "$RUNNER_TEMP/netrc"
-          podman run --rm -v "$PWD:/src:Z" -v "$RUNNER_TEMP/netrc:/root/.netrc:ro,Z" -w /src \
-            -e GOWORK=off -e GOFLAGS=-buildvcs=false -e 'GOPRIVATE=github.com/openpak/*' \
-            docker.io/library/golang:1.26-bookworm sh -ec '
-              go vet ./...
-              go test -race -count=1 ./...'
-      - name: Clear scratch
-        if: always()
-        run: rm -rf "$RUNNER_TEMP/scratch" "$RUNNER_TEMP/netrc"
+          if [ -z "${MODULE_TOKEN:-}" ]; then echo "::error::OPENPAK_MODULE_TOKEN is not set" >&2; exit 1; fi
+          printf 'machine github.com login x-access-token password %s\n' "$MODULE_TOKEN" > ~/.netrc
+      - run: go vet ./...
+      - run: go test -race -count=1 ./...
+      - if: always()
+        run: rm -f ~/.netrc
