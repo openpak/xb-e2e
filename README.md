@@ -18,9 +18,8 @@ GOWORK=off GOPRIVATE='github.com/openpak/*' go test -race ./...
 ## Docs
 
 - [Protocol](docs/protocol.md)
-- [Evidence](docs/evidence.md)
 - [Deploy](docs/deploy.md)
-- [Notes](docs/notes.md)
+- [Provenance](docs/provenance.md)
 
 ## Licence
 
